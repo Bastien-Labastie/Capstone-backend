@@ -11,9 +11,11 @@ const PORT = +process.env.PORT || 3001;
 
 // Use dev database, testing database, or via env var, production database
 function getDatabaseUri() {
-  return (process.env.NODE_ENV === "test")
-      ? "capstone_test"
-      : process.env.DATABASE_URL || "capstone";
+  if (process.env.NODE_ENV === "test") {
+    return process.env.TEST_DATABASE_URL || "postgresql://j2rld:12345@localhost:5432/jobly_test";
+  } else {
+    return process.env.DATABASE_URL || "postgresql://dnd_spells_db_user:JdFQVR4bAa1JaK7wSTihiG6EaxHyOB2G@dpg-cuvp2623esus73dpfsn0-a.oregon-postgres.render.com/dnd_spells_db";
+  }
 }
 
 // Speed up bcrypt during tests, since the algorithm safety isn't being tested
@@ -21,7 +23,7 @@ function getDatabaseUri() {
 // WJB: Evaluate in 2021 if this should be increased to 13 for non-test use
 const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === "test" ? 1 : 12;
 
-console.log("Jobly Config:".green);
+console.log("BookHub Config:".green);
 console.log("SECRET_KEY:".yellow, SECRET_KEY);
 console.log("PORT:".yellow, PORT.toString());
 console.log("BCRYPT_WORK_FACTOR".yellow, BCRYPT_WORK_FACTOR);
