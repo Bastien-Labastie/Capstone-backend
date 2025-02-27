@@ -14,7 +14,7 @@ function getDatabaseUri() {
   if (process.env.NODE_ENV === "test") {
     return process.env.TEST_DATABASE_URL || "postgresql://j2rld:12345@localhost:5432/jobly_test";
   } else {
-    return process.env.DATABASE_URL || "postgresql://dnd_spells_db_user:JdFQVR4bAa1JaK7wSTihiG6EaxHyOB2G@dpg-cuvp2623esus73dpfsn0-a.oregon-postgres.render.com/dnd_spells_db";
+    return process.env.DATABASE_URL || "postgresql://dnd_spells_user:JnFOP4LDL1OstgVPDTtXjdNPplqyLZr2@dpg-cuvthgogph6c73c4k82g-a/dnd_spells";
   }
 }
 
