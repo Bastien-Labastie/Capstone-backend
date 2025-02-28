@@ -74,22 +74,9 @@ router.get("/", ensureAdmin, async function (req, res, next) {
 router.get("/:username", async function (req, res, next) {
   try {
     console.log("Fetching user:", req.params.username);
-    const userRes = await db.query(
-    `SELECT username,
-            first_name AS "firstName",
-            last_name AS "lastName",
-            email,
-            is_admin AS "isAdmin"
-     FROM users
-     WHERE username = $1`,
-    [username]
-  );
+    const user = await User.get(req.params.username);
     console.log("User found:", user);
-    if (userRes.rows.length === 0) {
-    console.error(`No user found for: ${username}`);
-    return null; // Change from throwing an error to returning null for now
-  }
-  return userRes.rows[0];
+    return res.json({ user });
   } catch (err) {
     return next(err);
   }
