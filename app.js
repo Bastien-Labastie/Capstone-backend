@@ -13,6 +13,7 @@ const usersRoutes = require("./routes/users");
 
 const corsOptions = {
   origin: "https://capstone-frontend-7256.onrender.com", 
+  methods: "GET,POST,PATCH,DELETE",
   credentials: true, 
   optionsSuccessStatus: 200,
 };
