@@ -171,8 +171,10 @@ class User {
 
     const user = userRes.rows[0];
     console.log("Hashed Password: ", user.password);
+    console.log("Passed Password: ", data.currentPassword);
 
     const isValid = await bcrypt.compare(data.currentPassword, user.password);
+    console.log("Compare Result: ", isValid);
     if (!isValid) {
         throw new UnauthorizedError("Incorrect password.");
     }
