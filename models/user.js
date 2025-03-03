@@ -160,10 +160,6 @@ class User {
    */
 
   static async update(username, data) {
-    if (data.password) {
-      data.password = await bcrypt.hash(data.password, BCRYPT_WORK_FACTOR);
-    }
-
     const userRes = await db.query(
         `SELECT password FROM users WHERE username = $1`,
         [username]
