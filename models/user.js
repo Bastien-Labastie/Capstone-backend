@@ -170,6 +170,7 @@ class User {
     );
 
     const user = userRes.rows[0];
+    console.log(user.password);
 
     const isValid = await bcrypt.compare(data.currentPassword, user.password);
     if (!isValid) {
