@@ -175,7 +175,6 @@ class User {
         throw new UnauthorizedError("Incorrect password.");
     }
 
-    delete data.currentPassword;
     delete data.password;
 
     if (!user) throw new NotFoundError(`No user found with username: ${username}`);
