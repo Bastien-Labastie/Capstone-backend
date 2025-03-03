@@ -169,7 +169,7 @@ class User {
     console.log("Hashed Password: ", user.password);
     console.log("Passed Password: ", data.password);
 
-    const isValid = await bcrypt.compare(data.currentPassword, user.password);
+    const isValid = await bcrypt.compare(data.password, user.password);
     console.log("Compare Result: ", isValid);
     if (!isValid) {
         throw new UnauthorizedError("Incorrect password.");
