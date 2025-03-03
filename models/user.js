@@ -164,13 +164,32 @@ class User {
       data.password = await bcrypt.hash(data.password, BCRYPT_WORK_FACTOR);
     }
 
+    const userRes = await db.query(
+        `SELECT password FROM users WHERE username = $1`,
+        [username]
+    );
+
+    const user = userRes.rows[0];
+
+    const isValid = await bcrypt.compare(data.currentPassword, user.password);
+    if (!isValid) {
+        throw new UnauthorizedError("Incorrect password.");
+    }
+
+    delete data.currentPassword;
+    delete data.password;
+
+    if (!user) throw new NotFoundError(`No user found with username: ${username}`);
+
     const { setCols, values } = sqlForPartialUpdate(
         data,
         {
           firstName: "first_name",
           lastName: "last_name",
           isAdmin: "is_admin",
+          email: "email"
         });
+    
     const usernameVarIdx = "$" + (values.length + 1);
 
     const querySql = `UPDATE users 
@@ -185,8 +204,7 @@ class User {
     const user = result.rows[0];
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
-
-    delete user.password;
+    
     return user;
   }
 
