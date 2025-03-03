@@ -201,11 +201,11 @@ class User {
                                 email,
                                 is_admin AS "isAdmin"`;
     const result = await db.query(querySql, [...values, username]);
-    const user = result.rows[0];
+    const updatedUser = result.rows[0];
 
-    if (!user) throw new NotFoundError(`No user: ${username}`);
+    if (!updatedUser) throw new NotFoundError(`No user: ${username}`);
     
-    return user;
+    return updatedUser;
   }
 
   /** Delete given user from database; returns undefined. */
